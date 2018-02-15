@@ -10,7 +10,12 @@ namespace SchaarSteenPapier
     {
         static void Main(string[] args)
         {
-            // This is just to have something in the master branch
+            int aantalBeurten = 100;
+            while (aantalBeurten > 0)
+            {
+                Console.WriteLine(aantalBeurten);
+                --aantalBeurten;
+            }                        
         }
     }
 }
