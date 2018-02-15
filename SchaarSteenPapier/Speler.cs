@@ -16,6 +16,15 @@ namespace SchaarSteenPapier
             set { naamValue = value; }
         }
 
+        private int scoreValue;
+
+        public int Score
+        {
+            get { return scoreValue; }
+            set { scoreValue = value; }
+        }
+
+
         public Speler(string naam)
         {
             this.Naam = naam;
