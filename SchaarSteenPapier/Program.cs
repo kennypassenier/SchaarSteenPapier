@@ -10,6 +10,7 @@ namespace SchaarSteenPapier
     {
         static void Main(string[] args)
         {
+            // This is just to have something in the master branch
         }
     }
 }
