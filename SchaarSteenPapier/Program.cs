@@ -10,16 +10,36 @@ namespace SchaarSteenPapier
     {
         static void Main(string[] args)
         {
-            // This is just to have something in the master branch
-            Speler een = new Speler("Een");
-            Speler twee = new Speler("Twee");
-            for (int teller = 0; teller < 100; teller++)
+            int SpelTeller;
+            string UserInvoer;
+            // Aanmaak van de spelers
+            Speler Jef = new Speler("Jef", 1);
+            System.Threading.Thread.Sleep(1000);
+            Speler Frank = new Speler("Frank", 2);
+
+            // Initialisatie van het spel
+            Spel GameInstance = new Spel(Jef, Frank);
+
+            // User input voor het aantal rondes dat gespeeld dienen te worden. 
+            Console.WriteLine("Voer de maximale score in: ");
+            UserInvoer = Console.ReadLine();
+
+            // Als de user niets ingeeft, dient het standaard aantal spellen gespeeld te worden. Zie SpelTeller
+            if(UserInvoer != null)
             {
-                Console.WriteLine("Een:");
-                Console.WriteLine(een.SpeelBeurt());
-                Console.WriteLine("Twee:");
-                Console.WriteLine(twee.SpeelBeurt());
+                Int32.TryParse(UserInvoer, out SpelTeller);
             }
+            else
+            {
+                SpelTeller = 1000;
+            }
+            // Speel het spel
+            while (GameInstance.PlayerOne.Score < SpelTeller && GameInstance.PlayerTwo.Score < SpelTeller)
+            {
+                GameInstance.SpeelBeurt();
+            }
+
+
         }
     }
 }
