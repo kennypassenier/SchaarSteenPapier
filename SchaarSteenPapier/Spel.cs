@@ -8,6 +8,7 @@ namespace SchaarSteenPapier
 {
     public class Spel
     {
+        // Speler 1
         private Speler playerOneValue;
 
         public Speler PlayerOne
@@ -16,6 +17,7 @@ namespace SchaarSteenPapier
             set { playerOneValue = value; }
         }
 
+        // Speler 2
         private Speler playerTwoValue;
 
         public Speler PlayerTwo
@@ -23,6 +25,15 @@ namespace SchaarSteenPapier
             get { return playerTwoValue; }
             set { playerTwoValue = value; }
         }
+
+        private int gelijkspelValue;
+
+        public int Gelijkspel
+        {
+            get { return gelijkspelValue; }
+            set { gelijkspelValue = value; }
+        }
+
 
         // Constructor
         public Spel(Speler een, Speler twee)
@@ -33,6 +44,7 @@ namespace SchaarSteenPapier
 
         public void SpeelBeurt()
         {
+            Console.Clear();
             if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 1)
             {
                 Console.WriteLine("Speler 1 wint deze ronde!");
@@ -46,7 +58,10 @@ namespace SchaarSteenPapier
             else
             {
                 Console.WriteLine("Gelijkspel!");
+                Gelijkspel++;
             }
+            // Geeft de scores weer
+            Console.WriteLine(PlayerOne.ToString() + "\n" + PlayerTwo.ToString() + "\nAantal x gelijkspel: " + Gelijkspel);
         }
 
         // Return 1 als P1 gewonnen heeft, 2 als P2 gewonnen heeft en 0 bij gelijkspel.
@@ -56,7 +71,7 @@ namespace SchaarSteenPapier
             {
                 return 0;
             }
-            else if ( (P1 == 1 && P2 == 3) || (P1 == 2 && P2 == 1) || (P1 == 3 && P2 == 2))
+            else if ((P1 == 1 && P2 == 3) || (P1 == 2 && P2 == 1) || (P1 == 3 && P2 == 2))
             {
                 return 1;
             }
