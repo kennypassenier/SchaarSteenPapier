@@ -8,14 +8,14 @@ namespace SchaarSteenPapier
 {
     public class Speler
     {
-        // Geeft elke speler zijn eigen random seed
-        private Random randomInstanceValue;
+        //// Geeft elke speler zijn eigen random seed
+        //private Random randomInstanceValue;
 
-        public Random RandomInstance
-        {
-            get { return randomInstanceValue; }
-            set { randomInstanceValue = value; }
-        }
+        //public Random RandomInstance
+        //{
+        //    get { return randomInstanceValue; }
+        //    set { randomInstanceValue = value; }
+        //}
         
         private string naamValue;
 
@@ -60,19 +60,20 @@ namespace SchaarSteenPapier
         public Speler(string naam, int seed = 0)
         {
             this.Naam = naam;
-            if(seed == 0)
-            {
-                this.RandomInstance = new Random();
-            }
-            else
-            {
-                this.RandomInstance = new Random(seed);
-            }
+            //if(seed == 0)
+            //{
+            //    this.RandomInstance = new Random();
+            //}
+            //else
+            //{
+            //    this.RandomInstance = new Random(seed);
+            //}
         }
 
         public int SpeelBeurt()
         {
-            int keuze = RandomInstance.Next(1, 4);
+            System.Threading.Thread.Sleep(02);
+            int keuze = new Random(DateTime.Now.Millisecond).Next(1, 4);
             if(keuze == 1)
             {
                 this.Schaar++;
@@ -81,9 +82,13 @@ namespace SchaarSteenPapier
             {
                 this.Steen++;
             }
-            else
+            else if (keuze == 3)
             {
                 this.Papier++;
+            }
+            else
+            {
+                throw new Exception("Fout bij het kiezen van een actie.");
             }
             return keuze;
         }

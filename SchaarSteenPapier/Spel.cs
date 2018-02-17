@@ -26,6 +26,7 @@ namespace SchaarSteenPapier
             set { playerTwoValue = value; }
         }
 
+        // Aantal keren gelijkspel
         private int gelijkspelValue;
 
         public int Gelijkspel
@@ -34,33 +35,75 @@ namespace SchaarSteenPapier
             set { gelijkspelValue = value; }
         }
 
+        // Aantal gespeelde beurten
+        private int beurtValue;
+
+        public int Beurt
+        {
+            get { return beurtValue; }
+            set { beurtValue = value; }
+        }
+
+        // Datetime om te bepalen wanneer de console de laatste keer is geupdate.
+        private DateTime timeValue;
+
+        public DateTime Time
+        {
+            get { return timeValue; }
+            set { timeValue = value; }
+        }
+
 
         // Constructor
         public Spel(Speler een, Speler twee)
         {
             this.PlayerOne = een;
             this.PlayerTwo = twee;
+            this.Time = DateTime.Now;
         }
 
         public void SpeelBeurt()
         {
-            Console.Clear();
+            if (UpdateConsole())
+                Console.Clear();
             if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 1)
             {
-                Console.WriteLine("Speler 1 wint deze ronde!");
+                if(UpdateConsole())
+                    Console.WriteLine("Speler 1 wint deze ronde!");
                 PlayerOne.Score++;
             }
             else if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 2)
             {
-                Console.WriteLine("Speler 2 wint deze ronde!");
+                if (UpdateConsole())
+                    Console.WriteLine("Speler 2 wint deze ronde!");
                 PlayerTwo.Score++;
             }
             else
             {
-                Console.WriteLine("Gelijkspel!");
+                if (UpdateConsole())
+                    Console.WriteLine("Gelijkspel!");
                 Gelijkspel++;
             }
-            // Geeft de scores weer
+            if (UpdateConsole())
+                Scores();
+            
+        }
+
+        private bool UpdateConsole()
+        {
+            if(DateTime.Now.Subtract(Time).Seconds > 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // Geeft de scores weer
+        private void Scores()
+        {
             Console.WriteLine(PlayerOne.ToString() + "\n" + PlayerTwo.ToString() + "\nAantal x gelijkspel: " + Gelijkspel);
         }
 
@@ -80,6 +123,5 @@ namespace SchaarSteenPapier
                 return 2;
             }
         }
-
     }
 }
