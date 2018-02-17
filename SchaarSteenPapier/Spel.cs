@@ -60,39 +60,45 @@ namespace SchaarSteenPapier
             this.PlayerOne = een;
             this.PlayerTwo = twee;
             this.Time = DateTime.Now;
+            this.Beurt = 0;
         }
 
         public void SpeelBeurt()
         {
-            if (UpdateConsole())
-                Console.Clear();
-            if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 1)
+            int winner = SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt());
+            string winnerString;
+            if (winner == 1)
             {
-                if(UpdateConsole())
-                    Console.WriteLine("Speler 1 wint deze ronde!");
                 PlayerOne.Score++;
+                winnerString = String.Format("Speler 1 wint beurt {0}", Beurt);
             }
-            else if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 2)
+            else if (winner == 2)
             {
-                if (UpdateConsole())
-                    Console.WriteLine("Speler 2 wint deze ronde!");
                 PlayerTwo.Score++;
+                winnerString = String.Format("Speler 2 wint beurt {0}", Beurt);
             }
             else
             {
-                if (UpdateConsole())
-                    Console.WriteLine("Gelijkspel!");
                 Gelijkspel++;
+                winnerString = String.Format("Gelijkspel voor beurt {0}", Beurt);
             }
+            // Telt het aantal beurten
+            this.Beurt++;
+
+            // Schrijft alleen naar de console als UpdateConsole true aangeeft. Om flikkerende beelden te vermijden. 
             if (UpdateConsole())
+            {
+                Console.Clear();
+                Console.WriteLine(winnerString);
                 Scores();
-            
+            }
         }
 
         private bool UpdateConsole()
         {
-            if(DateTime.Now.Subtract(Time).Seconds > 5)
+            if(DateTime.Now.Subtract(Time).Seconds > 1)
             {
+                this.Time = DateTime.Now;
                 return true;
             }
             else
