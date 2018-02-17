@@ -124,7 +124,7 @@ namespace SchaarSteenPapier
         // Geeft de scores weer
         private void Scores()
         {
-            Console.WriteLine(String.Format("{0}\n{1}\nAantal x gelijkspel: {2:n0}", PlayerOne.ToString(), PlayerTwo.ToString(), Gelijkspel));
+            Console.WriteLine(String.Format("{0}\n{1}\nAantal x gelijkspel: \t{2:n0}", PlayerOne.ToString(), PlayerTwo.ToString(), Gelijkspel));
         }
 
         // Return 1 als P1 gewonnen heeft, 2 als P2 gewonnen heeft en 0 bij gelijkspel.
