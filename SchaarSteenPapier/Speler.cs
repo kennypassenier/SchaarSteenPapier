@@ -70,10 +70,9 @@ namespace SchaarSteenPapier
             //}
         }
 
-        public int SpeelBeurt()
-        {
-            System.Threading.Thread.Sleep(02);
-            int keuze = new Random(DateTime.Now.Millisecond).Next(1, 4);
+        public int SpeelBeurt(Random RandomInstance)
+        {            
+            int keuze = RandomInstance.Next(1, 4);
             if(keuze == 1)
             {
                 this.Schaar++;

@@ -53,6 +53,14 @@ namespace SchaarSteenPapier
             set { timeValue = value; }
         }
 
+        // Random object om keuzes te kunnen maken voor de spelers. 
+        private Random randomInstanceValue;
+
+        public Random RandomInstance
+        {
+            get { return randomInstanceValue; }
+            set { randomInstanceValue = value; }
+        }
 
         // Constructor
         public Spel(Speler een, Speler twee)
@@ -61,11 +69,12 @@ namespace SchaarSteenPapier
             this.PlayerTwo = twee;
             this.Time = DateTime.Now;
             this.Beurt = 0;
+            this.RandomInstance = new Random();
         }
 
         public void SpeelBeurt()
         {
-            int winner = SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt());
+            int winner = SelecteerWinnaar(PlayerOne.SpeelBeurt(RandomInstance), PlayerTwo.SpeelBeurt(RandomInstance));
             string winnerString;
             if (winner == 1)
             {
@@ -77,11 +86,16 @@ namespace SchaarSteenPapier
                 PlayerTwo.Score++;
                 winnerString = String.Format("Speler 2 wint beurt {0}", Beurt);
             }
-            else
+            else if (winner == 0)
             {
                 Gelijkspel++;
                 winnerString = String.Format("Gelijkspel voor beurt {0}", Beurt);
             }
+            else
+            {
+                throw new Exception("SelecteerWinnaar didn't give a proper response.");
+            }
+
             // Telt het aantal beurten
             this.Beurt++;
 
@@ -124,9 +138,13 @@ namespace SchaarSteenPapier
             {
                 return 1;
             }
-            else
+            else if ((P1 == 1 && P2 == 2) || (P1 == 2 && P2 == 3) || (P1 == 3 && P2 == 1))
             {
                 return 2;
+            }
+            else
+            {
+                throw new Exception("SelecteerWinnaar doet niet wat het moet doen.");
             }
         }
     }
