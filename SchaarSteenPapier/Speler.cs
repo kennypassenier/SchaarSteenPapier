@@ -8,15 +8,6 @@ namespace SchaarSteenPapier
 {
     public class Speler
     {
-        //// Geeft elke speler zijn eigen random seed
-        //private Random randomInstanceValue;
-
-        //public Random RandomInstance
-        //{
-        //    get { return randomInstanceValue; }
-        //    set { randomInstanceValue = value; }
-        //}
-        
         private string naamValue;
 
         public string Naam
@@ -60,14 +51,6 @@ namespace SchaarSteenPapier
         public Speler(string naam, int seed = 0)
         {
             this.Naam = naam;
-            //if(seed == 0)
-            //{
-            //    this.RandomInstance = new Random();
-            //}
-            //else
-            //{
-            //    this.RandomInstance = new Random(seed);
-            //}
         }
 
         public int SpeelBeurt(Random RandomInstance)
@@ -94,7 +77,7 @@ namespace SchaarSteenPapier
 
         public override string ToString()
         {
-            return string.Format("Speler: {0} \t Score: {1} \t Schaar: {2} \t Steen: {3} \t Papier: {4}", this.Naam, this.Score, this.Schaar, this.Steen, this.Papier);
+            return string.Format("Speler: {0} \t Score: {1:n0} \t Schaar: {2:n0} \t Steen: {3:n0} \t Papier: {4:n0}", this.Naam, this.Score, this.Schaar, this.Steen, this.Papier);
         }
 
     }

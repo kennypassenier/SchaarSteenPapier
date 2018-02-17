@@ -79,17 +79,17 @@ namespace SchaarSteenPapier
             if (winner == 1)
             {
                 PlayerOne.Score++;
-                winnerString = String.Format("Speler 1 wint beurt {0}", Beurt);
+                winnerString = String.Format("Speler 1 wint beurt {0:n0}", Beurt);
             }
             else if (winner == 2)
             {
                 PlayerTwo.Score++;
-                winnerString = String.Format("Speler 2 wint beurt {0}", Beurt);
+                winnerString = String.Format("Speler 2 wint beurt {0:n0}", Beurt);
             }
             else if (winner == 0)
             {
                 Gelijkspel++;
-                winnerString = String.Format("Gelijkspel voor beurt {0}", Beurt);
+                winnerString = String.Format("Gelijkspel voor beurt {0:n0}", Beurt);
             }
             else
             {
