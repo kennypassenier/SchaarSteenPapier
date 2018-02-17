@@ -26,6 +26,7 @@ namespace SchaarSteenPapier
             set { playerTwoValue = value; }
         }
 
+        // Aantal keren gelijkspel
         private int gelijkspelValue;
 
         public int Gelijkspel
@@ -34,33 +35,95 @@ namespace SchaarSteenPapier
             set { gelijkspelValue = value; }
         }
 
+        // Aantal gespeelde beurten
+        private int beurtValue;
+
+        public int Beurt
+        {
+            get { return beurtValue; }
+            set { beurtValue = value; }
+        }
+
+        // Datetime om te bepalen wanneer de console de laatste keer is geupdate.
+        private DateTime timeValue;
+
+        public DateTime Time
+        {
+            get { return timeValue; }
+            set { timeValue = value; }
+        }
+
+        // Random object om keuzes te kunnen maken voor de spelers. 
+        private Random randomInstanceValue;
+
+        public Random RandomInstance
+        {
+            get { return randomInstanceValue; }
+            set { randomInstanceValue = value; }
+        }
 
         // Constructor
         public Spel(Speler een, Speler twee)
         {
             this.PlayerOne = een;
             this.PlayerTwo = twee;
+            this.Time = DateTime.Now;
+            this.Beurt = 0;
+            this.RandomInstance = new Random();
         }
 
         public void SpeelBeurt()
         {
-            Console.Clear();
-            if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 1)
+            int winner = SelecteerWinnaar(PlayerOne.SpeelBeurt(RandomInstance), PlayerTwo.SpeelBeurt(RandomInstance));
+            string winnerString;
+            if (winner == 1)
             {
-                Console.WriteLine("Speler 1 wint deze ronde!");
                 PlayerOne.Score++;
+                winnerString = String.Format("Speler 1 wint beurt {0:n0}", Beurt);
             }
-            else if (SelecteerWinnaar(PlayerOne.SpeelBeurt(), PlayerTwo.SpeelBeurt()) == 2)
+            else if (winner == 2)
             {
-                Console.WriteLine("Speler 2 wint deze ronde!");
                 PlayerTwo.Score++;
+                winnerString = String.Format("Speler 2 wint beurt {0:n0}", Beurt);
+            }
+            else if (winner == 0)
+            {
+                Gelijkspel++;
+                winnerString = String.Format("Gelijkspel voor beurt {0:n0}", Beurt);
             }
             else
             {
-                Console.WriteLine("Gelijkspel!");
-                Gelijkspel++;
+                throw new Exception("SelecteerWinnaar didn't give a proper response.");
             }
-            // Geeft de scores weer
+
+            // Telt het aantal beurten
+            this.Beurt++;
+
+            // Schrijft alleen naar de console als UpdateConsole true aangeeft. Om flikkerende beelden te vermijden. 
+            if (UpdateConsole())
+            {
+                Console.Clear();
+                Console.WriteLine(winnerString);
+                Scores();
+            }
+        }
+
+        private bool UpdateConsole()
+        {
+            if(DateTime.Now.Subtract(Time).Seconds > 1)
+            {
+                this.Time = DateTime.Now;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // Geeft de scores weer
+        private void Scores()
+        {
             Console.WriteLine(PlayerOne.ToString() + "\n" + PlayerTwo.ToString() + "\nAantal x gelijkspel: " + Gelijkspel);
         }
 
@@ -75,11 +138,14 @@ namespace SchaarSteenPapier
             {
                 return 1;
             }
-            else
+            else if ((P1 == 1 && P2 == 2) || (P1 == 2 && P2 == 3) || (P1 == 3 && P2 == 1))
             {
                 return 2;
             }
+            else
+            {
+                throw new Exception("SelecteerWinnaar doet niet wat het moet doen.");
+            }
         }
-
     }
 }

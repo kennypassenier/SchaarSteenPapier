@@ -14,7 +14,6 @@ namespace SchaarSteenPapier
             string UserInvoer;
             // Aanmaak van de spelers
             Speler Jef = new Speler("Jef", 1);
-            System.Threading.Thread.Sleep(1000);
             Speler Frank = new Speler("Frank", 2);
 
             // Initialisatie van het spel
